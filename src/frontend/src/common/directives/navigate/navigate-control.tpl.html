@@ -1,0 +1,4 @@
+<a ui-sref="{{ vm.state }}">
+    <md-icon aria-label="{{vm.label}}" title="{{vm.title || ''}}">{{vm.icon}}</md-icon>
+    <md-tooltip ng-if="vm.tooltipText" md-direction="vm.tooltipDir">{{vm.tooltipText}}</md-tooltip>
+</a>

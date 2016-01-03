@@ -1,0 +1,45 @@
+import Controller from '../core/controller';
+
+import Firebase from 'firebase';
+
+const MOVIES_REF = new WeakMap();
+
+export default class AppController extends Controller {
+
+  /*@ngInject*/
+  constructor($scope, mmFire) {
+    super($scope);
+    MOVIES_REF.set(this, mmFire.firebaseArray('/movies'));
+  }
+
+  $setup() {
+    const vm = this;
+    const data = MOVIES_REF.get(this);
+
+    data.$loaded(()=> {
+      if (data.length == 0) {
+        console.log('No movies data');
+      }
+    });
+
+    vm.data = data;
+
+    // setup toolbar
+    vm.toolbar = {
+      isOpen   : false,
+      direction: 'left',
+      actions  : [
+        {
+          label : 'Add movie',
+          icon  : 'note_add',
+          action: vm._on_add_movie.bind(vm)
+        }
+      ]
+    }
+  }
+
+  _on_add_movie(){
+    console.log(this);
+  }
+
+}
