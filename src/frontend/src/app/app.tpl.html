@@ -1,16 +1,15 @@
-<md-content layout="column" flex layout-align="center">
-
-    <md-list ng-cloak>
-        <md-subheader class="md-no-sticky">
-            <div layout-align-md>
-                <span ng-if="vm.data.length">{{vm.data.length}} record{{vm.data.length > 1 ? 's': ''}}</span>
-                <span ng-if="vm.data.length == 0">No records</span>
-            </div>
-        </md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="rec in vm.data"
-                      ng-if="vm.data.length > 0">
-
-        </md-list-item>
-    </md-list>
-
+<md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column">
+    <md-card ng-repeat="item in vm.cards">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{ ::item.name }}</span>
+                <span class="md-subhead">Dashboard card</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-fab" aria-label="Go to action page" ng-click="item.onClick()">
+                <md-icon>{{ ::item.icon }}</md-icon>
+            </md-button>
+        </md-card-actions>
+    </md-card>
 </md-content>

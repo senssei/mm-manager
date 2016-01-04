@@ -9,7 +9,8 @@ import {moduleUnitTest} from  'test/utils';
 moduleUnitTest(
   appModule,
   [
-    'mm-manager.fire',
+    'ui.router',
+    'ngMaterial',
     'mm-manager.manager'
   ],
   {

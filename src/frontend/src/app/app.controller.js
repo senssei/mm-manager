@@ -1,28 +1,35 @@
 import Controller from '../core/controller';
 
-import Firebase from 'firebase';
-
-const MOVIES_REF = new WeakMap();
+const STATE = new WeakMap();
 
 export default class AppController extends Controller {
 
   /*@ngInject*/
-  constructor($scope, mmFire) {
+  constructor($scope, $state) {
     super($scope);
-    MOVIES_REF.set(this, mmFire.firebaseArray('/movies'));
+    STATE.set(this, $state);
   }
 
   $setup() {
+    const $state = STATE.get(this);
     const vm = this;
-    const data = MOVIES_REF.get(this);
 
-    data.$loaded(()=> {
-      if (data.length == 0) {
-        console.log('No movies data');
-      }
-    });
-
-    vm.data = data;
+    vm.cards = $state.get()
+      .filter((state)=>state.mainPageCard)
+      .map((state)=> {
+        return {
+          name   : state.name,
+          icon   : state.icon || 'bookmark',
+          onClick: ()=> {
+            $state.go(state.name);
+          }
+        }
+      })
+      .sort((a, b)=> {
+        const aName = a.name;
+        const bName = b.name;
+        return aName.localeCompare(bName);
+      });
   }
 
 }
