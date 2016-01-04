@@ -6,7 +6,8 @@ import {moduleUnitTest} from 'test/utils';
 moduleUnitTest(
   'mm-manager.manager',
   [
-    'mm-manager.manager.movie'
+    'mm-manager.manager.movie',
+    'mm-manager.fire'
   ],
   {
     name : 'state setup',
@@ -47,13 +48,13 @@ function testStateSetup() {
     done();
   });
 
-  it('should set state to be abstract',() =>{
+  it('should set state to be mainPageCard',() =>{
     let callArgs;
 
     managerModuleState(stateProvider);
 
     expect(stateProvider.state.calledOnce).to.equal(true);
     callArgs = stateProvider.state.getCall(0).args[0];
-    expect(callArgs.abstract).to.equal(true);
+    expect(callArgs.mainPageCard).to.equal(true);
   });
 }
