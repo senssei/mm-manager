@@ -21,6 +21,7 @@ export function watch(){
     ).on('change', browserSync.reload);
 
     // watch changes in scripts
+    // TODO(bug) should not compile if specs change
     gulp.watch(
       path.join(conf.paths.client, '**/*.js'),
       ['compile']
