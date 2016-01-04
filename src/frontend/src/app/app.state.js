@@ -22,7 +22,12 @@ export default function appState($stateProvider, $urlRouterProvider) {
         bindToController: true,
         templateUrl     : require('./app.tpl.html')
       },
-      'controls@': {}
+      'controls@': {
+        controller      : 'appControlsController',
+        controllerAs    : 'vm',
+        bindToController: true,
+        templateUrl: require('./app-controls.tpl.html')
+      }
     }
   };
   $stateProvider.state(state);

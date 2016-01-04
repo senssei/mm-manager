@@ -1,22 +1,4 @@
 <md-content layout="column" flex layout-align="center">
-    <md-fab-toolbar md-open="vm.toolbar.isOpen"
-                    md-direction="{{vm.toolbar.direction}}">
-        <md-fab-trigger class="align-with-text">
-            <md-button aria-label="menu" class="md-fab md-primary">
-                <md-icon>menu</md-icon>
-            </md-button>
-        </md-fab-trigger>
-        <md-toolbar>
-            <md-fab-actions class="md-toolbar-tools">
-                <md-button aria-label="{{act.label}}"
-                           title="{{act.label}}"
-                           ng-click="act.action()"
-                           class="md-icon-button" ng-repeat="act in vm.toolbar.actions">
-                    <md-icon>{{act.icon}}</md-icon>
-                </md-button>
-            </md-fab-actions>
-        </md-toolbar>
-    </md-fab-toolbar>
 
     <md-list ng-cloak>
         <md-subheader class="md-no-sticky">
@@ -25,6 +7,10 @@
                 <span ng-if="vm.data.length == 0">No records</span>
             </div>
         </md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="rec in vm.data"
+                      ng-if="vm.data.length > 0">
+
+        </md-list-item>
     </md-list>
 
 </md-content>

@@ -9,7 +9,8 @@ import {moduleUnitTest} from  'test/utils';
 moduleUnitTest(
   appModule,
   [
-    'mm-manager.fire'
+    'mm-manager.fire',
+    'mm-manager.manager'
   ],
   {
     name : 'state setup',
@@ -68,7 +69,6 @@ function themeSetup() {
     done();
   })
 }
-
 
 function testStateSetup() {
   let stateProvider = {};

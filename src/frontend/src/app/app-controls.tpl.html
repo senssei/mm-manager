@@ -1,0 +1,6 @@
+<md-button aria-label="{{act.label}}"
+           title="{{act.label}}"
+           ng-click="act.action()"
+           class="md-icon-button" ng-repeat="act in vm.toolbar.actions">
+    <md-icon>{{act.icon}}</md-icon>
+</md-button>

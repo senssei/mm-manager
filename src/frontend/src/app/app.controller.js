@@ -23,23 +23,6 @@ export default class AppController extends Controller {
     });
 
     vm.data = data;
-
-    // setup toolbar
-    vm.toolbar = {
-      isOpen   : false,
-      direction: 'left',
-      actions  : [
-        {
-          label : 'Add movie',
-          icon  : 'note_add',
-          action: vm._on_add_movie.bind(vm)
-        }
-      ]
-    }
-  }
-
-  _on_add_movie(){
-    console.log(this);
   }
 
 }
