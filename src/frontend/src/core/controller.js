@@ -23,11 +23,12 @@ export default class Controller {
       self.$destroy();
 
       PRIVATE.delete(self); // remove references
+      SCOPE.delete(self); // remove reference
     });
 
     timer.setTimeout(()=> {
       self.$setup();
-    }, 500);
+    }, 50);
   }
 
   /**
@@ -74,7 +75,7 @@ export default class Controller {
    * @param callback method to execute
    */
   $listen(event, callback = undefined) {
-    if (!callback) {
+    if (!(event && callback)) {
       return false;
     }
 
@@ -86,9 +87,10 @@ export default class Controller {
   }
 
   $watch(expression, callback = undefined) {
-    if (!callback) {
+    if (!(expression && callback)) {
       return false;
     }
+
     let listeners = PRIVATE.get(this).listeners;
     let watcher = SCOPE.get(this).$watch(expression, callback);
     listeners.push(watcher);
