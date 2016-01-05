@@ -53,6 +53,9 @@ export default class Controller {
   }
 
   $emit(eventName, args = {}, scope = undefined) {
+    if(!eventName){
+      return false;
+    }
     if (!scope) {
       scope = SCOPE.get(this);
     }
@@ -60,6 +63,9 @@ export default class Controller {
   }
 
   $broadcast(eventName, args = {}, scope = undefined) {
+    if(!eventName){
+      return false;
+    }
     if (!scope) {
       scope = SCOPE.get(this);
     }

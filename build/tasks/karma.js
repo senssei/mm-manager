@@ -7,7 +7,7 @@ import conf from '../conf';
 import {karmaConf} from '../conf/karma.conf';
 import {DEBUG, TEST_OPTS} from '../constants';
 
-const SUPPORTED_BROWSERS = ['Chrome', 'PhantomJS'];
+const SUPPORTED_BROWSERS = ['Chrome', 'PhantomJS', 'Firefox'];
 const LOG = gutil.log;
 const COLORS = gutil.colors;
 

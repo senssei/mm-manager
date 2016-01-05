@@ -15,6 +15,114 @@ describe('abstract Controller', () => {
   let $scope;
   let $rootScope;
 
+  context('$broadcast', () => {
+
+    beforeEach(inject((_$rootScope_)=> {
+      $scope = _$rootScope_.$new();
+    }));
+
+    it('should not $broadcast if eventName undefined', () => {
+      let spy;
+      let ctrl = new AController($scope);
+
+      spy = sinon.spy($scope, '$broadcast');
+
+      ctrl.$broadcast(undefined);
+
+      expect(spy.called).to.be.false;
+    });
+
+    it('should not use different $broadcast if valid is passed', () => {
+      let spy;
+      let spy2;
+      let differentScope = $scope.$new();
+      let ctrl = new AController($scope);
+
+      spy = sinon.spy(differentScope, '$broadcast');
+      spy.withArgs(sinon.match.string, sinon.match.object);
+
+      spy2 = sinon.spy($scope, '$broadcast');
+      spy2.withArgs(sinon.match.string, sinon.match.object);
+
+      ctrl.$broadcast('event', {}, differentScope);
+
+      expect(spy.withArgs(sinon.match.string, sinon.match.object).called).to.be.true;
+      expect(spy2.withArgs(sinon.match.string, sinon.match.object).called).to.be.false;
+    });
+
+    it('should use different $broadcast if undefined is passed', () => {
+      let spy;
+      let spy2;
+      let differentScope = $scope.$new();
+      let ctrl = new AController($scope);
+
+      spy = sinon.spy(differentScope, '$broadcast');
+      spy.withArgs(sinon.match.string, sinon.match.object);
+
+      spy2 = sinon.spy($scope, '$broadcast');
+      spy2.withArgs(sinon.match.string, sinon.match.object);
+
+      ctrl.$broadcast('event');
+
+      expect(spy.withArgs(sinon.match.string, sinon.match.object).called).to.be.false;
+      expect(spy2.withArgs(sinon.match.string, sinon.match.object).called).to.be.true;
+    });
+  });
+
+  context('$emit', () => {
+
+    beforeEach(inject((_$rootScope_)=> {
+      $scope = _$rootScope_.$new();
+    }));
+
+    it('should not $emit if eventName undefined', () => {
+      let spy;
+      let ctrl = new AController($scope);
+
+      spy = sinon.spy($scope, '$emit');
+
+      ctrl.$emit(undefined);
+
+      expect(spy.called).to.be.false;
+    });
+
+    it('should not use different $scope if valid is passed', () => {
+      let spy;
+      let spy2;
+      let differentScope = $scope.$new();
+      let ctrl = new AController($scope);
+
+      spy = sinon.spy(differentScope, '$emit');
+      spy.withArgs(sinon.match.string, sinon.match.object);
+
+      spy2 = sinon.spy($scope, '$emit');
+      spy2.withArgs(sinon.match.string, sinon.match.object);
+
+      ctrl.$emit('event', {}, differentScope);
+
+      expect(spy.withArgs(sinon.match.string, sinon.match.object).called).to.be.true;
+      expect(spy2.withArgs(sinon.match.string, sinon.match.object).called).to.be.false;
+    });
+
+    it('should use different $scope if undefined is passed', () => {
+      let spy;
+      let spy2;
+      let differentScope = $scope.$new();
+      let ctrl = new AController($scope);
+
+      spy = sinon.spy(differentScope, '$emit');
+      spy.withArgs(sinon.match.string, sinon.match.object);
+
+      spy2 = sinon.spy($scope, '$emit');
+      spy2.withArgs(sinon.match.string, sinon.match.object);
+
+      ctrl.$emit('event');
+
+      expect(spy.withArgs(sinon.match.string, sinon.match.object).called).to.be.false;
+      expect(spy2.withArgs(sinon.match.string, sinon.match.object).called).to.be.true;
+    });
+  });
+
   context('$watch', () => {
 
     beforeEach(inject((_$rootScope_)=> {
@@ -51,7 +159,8 @@ describe('abstract Controller', () => {
       spy = sinon.spy($scope, '$watch');
       spy.withArgs('test', sinon.match.func);
 
-      ctrl.$watch('test', ()=>{});
+      ctrl.$watch('test', ()=> {
+      });
 
       expect(spy.withArgs('test', sinon.match.func).called).to.be.true;
     });
