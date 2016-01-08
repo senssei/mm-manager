@@ -3,7 +3,7 @@ import angular from 'angular';
 import mmFireModule from 'common/fire/fire.module'
 import movieModule from './movie/movie.module';
 
-import mgrState from './manager.state';
+import mgrState from './manager.stateConfig.js';
 import mgrController from './manager.controller';
 
 const module = angular.module('mm-manager.manager', [

@@ -1,5 +1,5 @@
 import managerModule from './manager.module';
-import managerModuleState from './manager.state';
+import managerModuleState from './manager.stateConfig.js';
 
 import {moduleUnitTest} from 'test/utils';
 

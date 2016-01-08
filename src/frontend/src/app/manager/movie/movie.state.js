@@ -1,20 +1,4 @@
-import {name as parentStateName} from '../manager.state';
+import {name as parentName} from '../manager.state';
 
-export const name = `${parentStateName}.movie`;
-
-/*@ngInject*/
-export default function managerMovieState($stateProvider) {
-  const state = {
-    name : name,
-    url  : 'movie/',
-    views: {
-      '@': {
-        controller      : 'movieController',
-        controllerAs    : 'vm',
-        bindToController: true,
-        templateUrl     : require('./movie.tpl.html')
-      }
-    }
-  };
-  $stateProvider.state(state);
-}
+export const name = `${parentName}.movie`;
+export const url = 'movie/';

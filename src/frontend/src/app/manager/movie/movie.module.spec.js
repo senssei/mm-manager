@@ -1,5 +1,5 @@
 import movieModule from './movie.module';
-import movieModuleState from './movie.state';
+import movieModuleState from './movie.stateConfig.js';
 
 import {moduleUnitTest} from 'test/utils';
 

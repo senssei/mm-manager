@@ -2,7 +2,7 @@ import angular from 'angular';
 import ngMaterial from 'angular-material';
 import uiRouter from 'angular-ui-router';
 
-import stateConfig from './app.state';
+import stateConfig from './app.stateConfig';
 import {appThemeConfig, templateConfig} from './app.config';
 import AppController from './app.controller';
 import AppControlsController from './app-controls.controller';

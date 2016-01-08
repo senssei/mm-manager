@@ -1,5 +1,12 @@
 import Controller from '../../../core/controller';
 
+/**
+ * @class MovieController
+ * @type MovieController
+ * @description
+ *  MovieController is primary controller for
+ */
+// TODO(doc) finish writing documentation
 export default class MovieController extends Controller {
   /*@ngInject*/
   constructor($scope) {
