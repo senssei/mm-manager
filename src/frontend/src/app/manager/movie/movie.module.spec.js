@@ -5,7 +5,9 @@ import {moduleUnitTest} from 'test/utils';
 
 moduleUnitTest(
   'mm-manager.manager.movie',
-  [],
+  [
+    'mm-manager.fire'
+  ],
   {
     name : 'state setup',
     logic: testStateSetup

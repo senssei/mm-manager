@@ -16,11 +16,18 @@ export function verifyMapContent(map, content = {}) {
 export function moduleUnitTest(name, requiredDependencies = [], ...logicTestFn) {
 
   describe(name + ' module', function () {
-    var testedModule;
+    let testedModule;
+    let deps;
 
     before(()=> {
       // get the module object
-      testedModule = angular.module(name)
+      testedModule = angular.module(name);
+      deps = testedModule.value(name).requires;
+
+      if(deps.length > 0 && requiredDependencies.length == 0){
+        throw new Error(`${name} declares ${deps.length} dependencies, but no spec defined for it`);
+      }
+
     });
 
     it("should be registered", ()=> {
@@ -29,9 +36,8 @@ export function moduleUnitTest(name, requiredDependencies = [], ...logicTestFn) 
 
     if (requiredDependencies && requiredDependencies.length > 0) {
       context('dependencies', () => {
-        let deps;
 
-        before(()=> {
+        beforeEach(()=>{
           deps = testedModule.value(name).requires;
         });
 

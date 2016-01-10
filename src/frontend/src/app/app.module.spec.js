@@ -1,7 +1,7 @@
 'use strict';
 
 import appModule from './app.module';
-import appModuleState from './app.state';
+import appModuleState from './app.stateConfig';
 import {appThemeConfig} from './app.config';
 
 import {moduleUnitTest} from  'test/utils';
