@@ -16,19 +16,25 @@ export default class MovieController extends Controller {
   $setup() {
     const vm = this;
 
-    // search form
-    vm.search = {
-      'query': undefined,
-      'database': undefined,
-      'inAll': false
-    };
+    vm.foundMovies = undefined; // from search movie directive
+    vm.movieSelected = false;
     vm.movie = {}; // movie form
 
-    vm.searchDatabases = [
-      {
-        label: 'IMDB'
-      }
-    ]
+    this.$watch('vm.foundMovies', (newValue, oldValue)=> {
+      vm.movieSelected = !(newValue && newValue !== oldValue)
+    })
+  }
 
+  selectMovieFromSearch($event, movie) {
+    $event.stopImmediatePropagation();
+
+    // mark selection
+    this.movieSelected = true;
+
+    // copy into form model
+    this.movie = {
+      title   : movie.title,
+      subtitle: movie.subtitle
+    }
   }
 }

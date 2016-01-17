@@ -24,7 +24,7 @@ export function webpackConf(isTest = false) {
     context: `${conf.basePath}`,
     profile: PROFILE,
     cache  : !PRODUCTION,
-    devtool: PRODUCTION ? 'eval' : 'inline-source-map',
+    devtool: PRODUCTION ? 'eval' : '#inline-source-map',
     output : {
       filename: '[name].js'
     },
@@ -41,7 +41,15 @@ export function webpackConf(isTest = false) {
       ],
       // ES6 modules have to be preprocessed with Babel loader to work in browsers.
       loaders   : [
-        {test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']},
+        {
+          test   : /\.js$/,
+          exclude: /node_modules/,
+          loader : 'babel-loader',
+          query  : {
+            presets: ['es2015'],
+            plugins: ['transform-runtime']
+          }
+        },
         {test: /\.tpl.html$/, loader: 'ngtemplate?relativeTo=' + conf.paths.client + '/!html'},
         {
           test  : /\.less$/,
@@ -65,13 +73,16 @@ function getVendor() {
   return [
     // required by angular bindings
     'firebase',
+    'moment',
     // angular stuff
     'angular',
     'angular-animate',
     'angular-aria',
     'angular-material',
     'angular-ui-router',
+    'angular-resource',
     'angularfire',
+    'angular-moment',
     // rest of libraries
     'lodash',
     'bowser'

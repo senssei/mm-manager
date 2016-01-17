@@ -23,7 +23,7 @@ describe('mm-search-movie directive', ()=> {
 
     it('should have ngModel in require', () => {
       let require = instance.require;
-      expect(require).to.contain('?ngModel');
+      expect(require).to.contain('ngModel');
     });
 
   });

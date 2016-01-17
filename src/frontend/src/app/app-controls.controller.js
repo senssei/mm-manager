@@ -1,6 +1,6 @@
 import Controller from '../core/controller';
 
-import {name as movieState} from './manager/movie/movie.stateConfig.js';
+import {name as movieState} from './manager/movie/movie.state.js';
 
 const STATE = new WeakMap();
 

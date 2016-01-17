@@ -12,15 +12,19 @@
         <md-input-container class="md-block" ng-if="!vm.search.inAll" flex-gt-sm>
             <label>Database</label>
             <md-select ng-model="vm.search.database">
-                <md-option ng-repeat="item in vm.searchDatabases" value="{{item}}">{{item.label}}</md-option>
+                <md-option ng-repeat="item in vm.searchInDatabases"
+                           value="{{item.key}}">{{item.label}}
+                </md-option>
             </md-select>
             <span class="hint" ng-if="!vm.search.database">Database to search in</span>
         </md-input-container>
-        <md-input-container>
+        <md-input-container ng-if="vm.searchInDatabases.length > 1">
             <md-switch ng-model="vm.search.inAll">Search in all?</md-switch>
         </md-input-container>
-        <md-button ng-click="vm.doSearch()" ng->
+        <md-button ng-click="vm.doSearch()"
+                   ng-disabled="!(vm.search.query && vm.search.database) || searchInDatabse.$invalid">
             <md-icon>search</md-icon>
+            <span class="hint">Execute search</span>
         </md-button>
     </div>
 </form>
