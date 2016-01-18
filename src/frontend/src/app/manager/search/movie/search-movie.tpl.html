@@ -7,13 +7,17 @@
                    ng-minlength="5"
                    ng-maxlength="25"
                    ng-required>
-            <span class="hint" ng-if="!vm.search.query">Query to search engine</span>
+            <span class="hint"
+                  ng-if="!vm.search.query">Query to search engine</span>
         </md-input-container>
-        <md-input-container class="md-block" ng-if="!vm.search.inAll" flex-gt-sm>
+        <md-input-container class="md-block" ng-if="!vm.search.inAll"
+                            flex-gt-sm>
             <label>Database</label>
-            <md-select ng-model="vm.search.database">
+            <md-select ng-model="vm.search.database"
+                       ng-disabled="vm.searchInDatabases.length === 1"
+                       ng-required>
                 <md-option ng-repeat="item in vm.searchInDatabases"
-                           value="{{item.key}}">{{item.label}}
+                           value="{{::item.key}}">{{::item.label}}
                 </md-option>
             </md-select>
             <span class="hint" ng-if="!vm.search.database">Database to search in</span>
