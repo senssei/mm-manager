@@ -17,9 +17,10 @@ class OMDBResultTransformer {
   transformPair(key, value) {
     const mapper = {
       'released': () => {
+        const releasedAt = moment(value, 'DD MMM YYYY');
         return {
           key  : 'releasedAt',
-          value: moment(value, 'DD MMM YYYY').unix()
+          value: releasedAt.toDate()
         }
       }
     };

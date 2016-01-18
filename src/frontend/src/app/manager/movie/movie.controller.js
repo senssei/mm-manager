@@ -33,8 +33,10 @@ export default class MovieController extends Controller {
 
     // copy into form model
     this.movie = {
-      title   : movie.title,
-      subtitle: movie.subtitle
+      title     : movie.title,
+      subtitle  : movie.subtitle,
+      releasedAt: movie.releasedAt
     }
   }
+
 }
