@@ -8,10 +8,12 @@ const RESULT_TRANSFORMER = new WeakMap();
 
 const OMDB_URL = 'http://www.omdbapi.com/';
 
+const VALUES_TO_SKIP = ['N/A'];
+
 class OMDBResultTransformer {
 
   static get skipValues() {
-    return ['N/A'];
+    return VALUES_TO_SKIP; // better static variables handling done here
   }
 
   transformPair(key, value) {

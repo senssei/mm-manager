@@ -27,7 +27,7 @@ export function karmaConf() {
       {pattern: 'src/frontend/**/*.tpl.html'}
     ],
     preprocessors        : {
-      'src/frontend/src/test-webpack.js': ['webpack'],
+      'src/frontend/src/test-webpack.js': ['webpack', 'sourcemap'],
       'src/frontend/**/*.tpl.html'      : ['ng-html2js']
     },
     client               : {
