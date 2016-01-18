@@ -3,7 +3,7 @@ import ngMaterial from 'angular-material';
 import uiRouter from 'angular-ui-router';
 
 import stateConfig from './app.stateConfig';
-import {appThemeConfig, templateConfig} from './app.config';
+import {templateConfig} from './app.config';
 import AppController from './app.controller';
 import AppControlsController from './app-controls.controller';
 
@@ -15,7 +15,6 @@ const module = angular.module('mm-manager.app', [
     managerModule
   ])
   .config(stateConfig)
-  .config(appThemeConfig)
   .config(templateConfig)
   .controller('appControlsController', AppControlsController)
   .controller('appController', AppController);
