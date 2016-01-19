@@ -2,4 +2,12 @@ import searchModule from './search-movie.module.js';
 
 import {moduleUnitTest} from 'test/utils';
 
-export default moduleUnitTest('mm-manager.manager.search.movie');
+const expectedName = 'mm-manager.manager.search.movie';
+const expectedDependencies = [
+  'mm-manager.search'
+];
+
+export default moduleUnitTest(
+  expectedName,
+  expectedDependencies
+);

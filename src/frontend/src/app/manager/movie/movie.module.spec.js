@@ -6,6 +6,7 @@ import {moduleUnitTest} from 'test/utils';
 moduleUnitTest(
   'mm-manager.manager.movie',
   [
+    'angularMoment',
     'mm-manager.fire',
     'mm-manager.manager.search.movie'
   ],

@@ -8,7 +8,6 @@ export default class MMSearchMovieDirective extends BoundDirective {
 
     this.restrict = 'E';
     this.templateUrl = require('./search-movie.tpl.html');
-    this.priority = 1110;
     this.scope = {
       'movies': '=movies'
     }
