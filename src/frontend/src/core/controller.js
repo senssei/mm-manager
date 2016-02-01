@@ -29,8 +29,11 @@ export default class Controller {
       SCOPE.delete(self); // remove reference
     });
 
+
     timer.setTimeout(()=> {
-      self.$setup();
+      $scope.$apply(()=> {
+        self.$setup();
+      })
     }, 50);
   }
 

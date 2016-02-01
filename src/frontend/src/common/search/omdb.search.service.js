@@ -77,8 +77,10 @@ class OMBDBSearch {
     }
 
     const config = {
-      cache : false,
-      params: OMBDBSearch._get_title_params(title)
+      cache : true,
+      params: {
+        t: title
+      }
     };
 
     return $http.get(OMDB_URL, config).then(
@@ -92,12 +94,6 @@ class OMBDBSearch {
       }
     )
 
-  }
-
-  static _get_title_params(title) {
-    return {
-      t: title
-    }
   }
 
   static factory($http, $q, $log) {
