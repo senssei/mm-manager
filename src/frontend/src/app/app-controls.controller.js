@@ -23,14 +23,12 @@ export default class AppControlsController extends Controller {
         {
           label : 'Add movie',
           icon  : 'note_add',
-          action: vm._on_add_movie.bind(vm)
+          action: () => {
+            STATE.get(this).go(movieState)
+          }
         }
       ]
     }
-  }
-
-  _on_add_movie(){
-    STATE.get(this).go(movieState);
   }
 
 }

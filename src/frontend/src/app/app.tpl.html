@@ -1,15 +1,41 @@
-<md-content class="md-padding" layout="row" layout-wrap layout-align="center start" layout-xs="column">
-    <md-card ng-repeat="item in vm.cards">
-        <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">{{ ::item.name }}</span>
-                <span class="md-subhead">Dashboard card</span>
-            </md-card-title-text>
-        </md-card-title>
-        <md-card-actions layout="row" layout-align="end center">
-            <md-button class="md-fab" aria-label="Go to action page" ng-click="item.onClick()">
-                <md-icon>{{ ::item.icon }}</md-icon>
+<md-content layout="column"
+            layout-align="center stretch"
+            layout-xs="row"
+            layout-fill>
+
+    <!-- allow views under app to display next to the list of movies -->
+    <div class="mm-center mm-with-border mm-vertical-padding"
+         ui-view="application"
+         ng-if="vm.hasApplicationView()"
+         ng-cloak></div>
+
+    <md-divider ng-if="vm.hasApplicationView()" md-inset></md-divider>
+
+    <!-- always display all movies -->
+    <md-content layout="column"
+                layout-align="center stretch"
+                class="mm-center mm-with-border"
+                flex>
+        <md-list ng-if="vm.movies.length > 0" ng-cloak>
+            <md-subheader class="md-no-sticky">
+                <div layout-align-md>
+                    <span ng-if="vm.movies.length">{{vm.movies.length}} record{{vm.movies.length > 1 ? 's': ''}}</span>
+                </div>
+            </md-subheader>
+            <md-list-item class="md-3-line" ng-repeat="rec in vm.movies"
+                          ng-if="vm.movies.length > 0">
+
+            </md-list-item>
+        </md-list>
+        <md-content flex layout-padding>
+            <h2>
+                Currently there are no movies in your database, please use button below
+                to add something :)
+            </h2>
+            <md-button ng-click="vm.newMovieForm($event)">
+                <span class="hint">Add new movie</span>
             </md-button>
-        </md-card-actions>
-    </md-card>
+        </md-content>
+    </md-content>
+
 </md-content>
