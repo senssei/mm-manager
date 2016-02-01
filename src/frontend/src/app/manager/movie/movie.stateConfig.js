@@ -6,7 +6,7 @@ export default function managerMovieState($stateProvider) {
     name : name,
     url  : url,
     views: {
-      '@': {
+      'application': {
         controller      : 'movieController',
         controllerAs    : 'vm',
         bindToController: true,
