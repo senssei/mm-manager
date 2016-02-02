@@ -109,4 +109,11 @@ export default class Controller {
 
     return true;
   }
+
+  $apply(fn = undefined) {
+    if (!fn) {
+      return;
+    }
+    SCOPE.get(this).$apply(fn);
+  }
 }
