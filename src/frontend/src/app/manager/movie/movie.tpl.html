@@ -24,7 +24,7 @@
                 style="min-height: 224px;" layout="row">
         <div id="new_movie_form">
             <h4>Define new movie for database</h4>
-            <form name="movieForm">
+            <form name="movieForm" novalidate>
                 <!--TODO(feature) selecting poster-->
                 <div layout-align layout-gt-sm="row">
                     <md-input-container class="md-block">
@@ -33,9 +33,30 @@
                     </md-input-container>
                     <md-input-container class="md-block">
                         <label>Subtitle</label>
-                        <input md-maxlength="150" required name="subtitle" ng-model="vm.movie.subtitle">
+                        <input md-maxlength="150" name="subtitle" ng-model="vm.movie.subtitle">
                     </md-input-container>
                     <md-datepicker ng-model="vm.movie.releasedAt" md-placeholder="Released at"></md-datepicker>
+                </div>
+                <div layout-align layout-gt-sm="row">
+                    <md-input-container class="md-block">
+                        <label>Description</label>
+                        <textarea md-maxlength="500" name="description" ng-model="vm.movie.description"></textarea>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-button ng-click="vm.submitForm($event, vm.movie)"
+                               ng-disabled="movieForm.$invalid">
+                        <md-icon>done</md-icon>
+                        <span class="hint">Submit {{ vm.movie.title }}</span>
+                    </md-button>
+                    <md-button ng-click="vm.clearForm($event)">
+                        <md-icon>cached</md-icon>
+                        <span class="hint">Clear</span>
+                    </md-button>
+                    <md-button ng-click="vm.cancelForm($event)">
+                        <md-icon>exit_to_app</md-icon>
+                        <span class="hint">Cancel</span>
+                    </md-button>
                 </div>
             </form>
         </div>

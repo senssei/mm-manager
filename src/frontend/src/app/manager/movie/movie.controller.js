@@ -1,4 +1,12 @@
+import {clone} from 'lodash/lang';
+
 import Controller from '../../../core/controller';
+import {name as appState} from '../../app.state';
+
+const STATE = new WeakMap();
+const TOAST = new WeakMap();
+const MOVIES_REF = new WeakMap();
+const PRIV = new WeakMap();
 
 /**
  * @class MovieController
@@ -9,8 +17,12 @@ import Controller from '../../../core/controller';
 // TODO(doc) finish writing documentation
 export default class MovieController extends Controller {
   /*@ngInject*/
-  constructor($scope) {
+  constructor($scope, $state, $mdToast, mmFire) {
     super($scope);
+    STATE.set(this, $state);
+    TOAST.set(this, $mdToast);
+    MOVIES_REF.set(this, mmFire.firebaseArray('/movies'));
+    PRIV.set(this, {});
   }
 
   $setup() {
@@ -22,7 +34,62 @@ export default class MovieController extends Controller {
 
     this.$watch('vm.foundMovies', (newValue, oldValue)=> {
       vm.movieSelected = !(newValue && newValue !== oldValue)
-    })
+    });
+
+    PRIV.get(this).toast = preCreateToast(TOAST.get(this));
+  }
+
+  $destroy() {
+    STATE.del(this);
+    TOAST.del(this);
+    MOVIES_REF.del(this);
+    PRIV.del(this);
+
+    this.foundMovies = undefined;
+    this.movie = undefined;
+  }
+
+  submitForm($event, movie) {
+    $event.stopImmediatePropagation();
+
+    const toast_ok = getToast.bind(this)('submit_ok');
+    const toast_fail = getToast.bind(this)('submit_fail');
+    const successCallback = ()=> {
+      TOAST.get(this).show(toast_ok);
+    };
+    const errorCallback = ()=> {
+      TOAST.get(this).show(toast_fail);
+    };
+
+    MOVIES_REF
+      .get(this)
+      .$add(clone(movie))
+      .then(successCallback, errorCallback)
+  }
+
+  clearForm($event) {
+    $event.stopImmediatePropagation();
+
+    const toast = getToast.bind(this)('clear');
+    TOAST.get(this).show(toast).then((response)=> {
+      if (response === 'yes') {
+        this.$apply(()=> {
+          this.movieSelected = false;
+          this.movie = undefined;
+        })
+      }
+    });
+  }
+
+  cancelForm($event) {
+    $event.stopImmediatePropagation();
+
+    const toast = getToast.bind(this)('cancel');
+    TOAST.get(this).show(toast).then((response)=> {
+      if (response === 'yes') {
+        STATE.get(this).go(appState);
+      }
+    });
   }
 
   selectMovieFromSearch($event, movie) {
@@ -33,10 +100,37 @@ export default class MovieController extends Controller {
 
     // copy into form model
     this.movie = {
-      title     : movie.title,
-      subtitle  : movie.subtitle,
-      releasedAt: movie.releasedAt
+      title      : movie.title,
+      subtitle   : movie.subtitle,
+      description: movie.description,
+      releasedAt : movie.releasedAt
     }
   }
+}
 
+function preCreateToast($mdToast) {
+  return {
+    'clear'      : $mdToast
+      .simple()
+      .textContent('Are you sure to clear the form ?')
+      .action('Yes')
+      .action('No')
+      .highlightAction(false),
+    'cancel'     : $mdToast
+      .simple()
+      .textContent('Are you sure to cancel the form ?')
+      .action('Yes')
+      .action('No')
+      .highlightAction(false),
+    'submit_ok'  : $mdToast
+      .simple()
+      .textContent('Movie has been successfully updated'),
+    'submit_fail': $mdToast
+      .simple()
+      .textContent('There was an error when submitting the movie')
+  }
+}
+
+function getToast(key) {
+  return PRIV.get(this)['toast'][key];
 }
