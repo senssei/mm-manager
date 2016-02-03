@@ -29,7 +29,7 @@
       "morgan"           : "^1.6.1"
    },
    "devDependencies": {
-      "angular-mocks"                 : "^1.4.8",
+      "angular-mocks"                 : "^1.4.9",
       "babel-core"                    : "^6.4.x",
       "babel-loader"                  : "^6.2.x",
       "babel-plugin-transform-runtime": "^6.4.3",
