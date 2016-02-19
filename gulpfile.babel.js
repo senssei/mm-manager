@@ -11,6 +11,7 @@ import {serve} from './build/tasks/serve';
 import {watch} from './build/tasks/watch';
 import {testUnit, testE2E} from './build/tasks/test';
 import {karma} from './build/tasks/karma';
+import {backend} from './build/tasks/backend';
 
 import {TEST_SUITES} from './build/constants';
 
@@ -55,3 +56,5 @@ gulp.task('test', (done) => {
 gulp.task('karma', karma());
 gulp.task('test:unit', ['karma'], testUnit());
 gulp.task('test:e2e', testE2E());
+
+gulp.task('backend', backend());
