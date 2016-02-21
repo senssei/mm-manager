@@ -27,6 +27,7 @@ export default {
   },
   build   : {
     dir       : path.join(basePath, './dist'),
+    serverDir : path.join(basePath, './dist_server'),
     jsFile    : 'index.js',
     cssFile   : 'index.css',
     vendorFile: 'vendor.js',

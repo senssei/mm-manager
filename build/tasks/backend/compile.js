@@ -4,15 +4,15 @@ import gulp from 'gulp';
 import gutil from 'gulp-util';
 import webpackStream from 'webpack-stream';
 import webpack from 'webpack';
-import wConf from '../conf/webpack.backend.conf';
+import wConf from '../../conf/webpack.backend.conf.js';
 
-import conf from '../conf';
-import {DEBUG} from '../constants';
+import conf from '../../conf';
+import {DEBUG} from '../../constants';
 
 const LOG = gutil.log;
 const COLORS = gutil.colors;
 
-export function backend() {
+export function compileBackend() {
   return () => {
     let rootFile = conf.backend.entryFile;
     let onFinish = (err, stats) => {
@@ -32,6 +32,6 @@ export function backend() {
         webpack,
         onFinish
       ))
-      .pipe(gulp.dest(conf.build.dir));
+      .pipe(gulp.dest(conf.build.serverDir));
   };
 }

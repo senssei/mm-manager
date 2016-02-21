@@ -11,7 +11,9 @@ import {serve} from './build/tasks/serve';
 import {watch} from './build/tasks/watch';
 import {testUnit, testE2E} from './build/tasks/test';
 import {karma} from './build/tasks/karma';
-import {backend} from './build/tasks/backend';
+import {compileBackend} from './build/tasks/backend/compile';
+import {runBackend} from './build/tasks/backend/run';
+import {backendDistFolder} from './build/tasks/backend/dist';
 
 import {TEST_SUITES} from './build/constants';
 
@@ -43,7 +45,7 @@ gulp.task('dev', (done) => {
 
 gulp.task('test', (done) => {
   let testTasks = [];
-  TEST_SUITES.forEach((ts)=>{
+  TEST_SUITES.forEach((ts)=> {
     testTasks.push(`test:${ts}`);
   });
   gutil.log(`Running tests=${testTasks}`);
@@ -57,4 +59,8 @@ gulp.task('karma', karma());
 gulp.task('test:unit', ['karma'], testUnit());
 gulp.task('test:e2e', testE2E());
 
-gulp.task('backend', backend());
+gulp.task('backend:dist', backendDistFolder());
+gulp.task('backend:compile', ['backend:dist'], compileBackend());
+gulp.task('backend:run', ['backend:compile'], runBackend());
+gulp.task('backend', ['backend:run']);
+

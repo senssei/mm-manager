@@ -1,5 +1,7 @@
+const server = {
+  port: 3000
+};
+
 export default {
-  server: {
-    port: 3000
-  }
+  server: server
 }

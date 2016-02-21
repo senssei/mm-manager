@@ -17,10 +17,13 @@ fs.readdirSync(conf.paths.nodeModules)
 export default {
   context  : `${conf.basePath}`,
   target   : 'node',
-  entry    : conf.backend.entryFile,
+  entry    : [
+    'babel-polyfill',
+    conf.backend.entryFile
+  ],
   devtool  : 'sourcemap',
   output   : {
-    path    : conf.build.dir,
+    path    : conf.build.serverDir,
     filename: 'server.js'
   },
   quiet    : !DEBUG,
