@@ -34,8 +34,7 @@ export default {
         exclude: /node_modules/,
         loader : 'babel-loader',
         query  : {
-          presets: ['es2015'],
-          plugins: ['transform-runtime']
+          presets: ['es2015']
         }
       }
     ]

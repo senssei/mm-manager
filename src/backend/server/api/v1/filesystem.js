@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import thunkify from 'thunkify';
+import S from 'string';
 
 import router from 'koa-router';
 import mount from 'koa-mount';
@@ -10,6 +11,7 @@ import {getQueryParam} from '../../utils';
 
 const mountPath = '/v1/fs';
 const readDir = thunkify(fs.readdir);
+const fileStat = thunkify(fs.stat);
 
 export default mount(
   mountPath,
@@ -25,14 +27,28 @@ function *onGet() {
     let filter = getQueryParam(this.query, 'filter');
     let recursive = getQueryParam(this.query, 'recursive', false);
 
-    let items = yield readDir(path);
-    let files = items.map((file)=> {
-      return path.join(basePath, file);
-    });
+    let items = yield readDir(basePath);
+    let files = yield items
+      .filter((filePath)=> {
+        if (process.platform === 'win32') {
+          // cannot actually determine if file is hidden in windows
+          return true;
+        }
+        return !(/^\./.test(filePath));
+      })
+      .map((filePath)=> {
+        let actualPath = path.join(basePath, filePath);
+        let stats = fileStat(filePath);
+        return {
+          path: S(actualPath).replaceAll(path.sep, '/').s,
+          stat: stats
+        }
+      });
 
     this.status = 200;
     this.body = {
       count: files.length,
+      dir  : S(basePath).replaceAll(path.sep, '/').s,
       files: files
     };
   } catch (err) {
