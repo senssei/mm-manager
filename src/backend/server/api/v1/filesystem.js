@@ -38,7 +38,7 @@ function *onGet() {
       })
       .map((filePath)=> {
         let actualPath = path.join(basePath, filePath);
-        let stats = fileStat(filePath);
+        let stats = fileStat(actualPath);
         return {
           path: S(actualPath).replaceAll(path.sep, '/').s,
           stat: stats

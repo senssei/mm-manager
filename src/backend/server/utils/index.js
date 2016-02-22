@@ -1,5 +1,5 @@
 export function getQueryParam(query, name, def = undefined) {
-  let param = query[param];
+  let param = query[name];
   if (!param) {
     return def;
   }
