@@ -1,18 +1,14 @@
-import fs from 'fs';
-import path from 'path';
 import os from 'os';
-import thunkify from 'thunkify';
+import path from 'path';
 import S from 'string';
 
 import router from 'koa-router';
 import mount from 'koa-mount';
 
+import FSScanner from '../../../scanner';
 import {getQueryParam} from '../../utils';
 
 const mountPath = '/v1/fs';
-const readDir = thunkify(fs.readdir);
-const fileStat = thunkify(fs.stat);
-
 export default mount(
   mountPath,
   router()
@@ -26,30 +22,20 @@ function *onGet() {
     let basePath = getQueryParam(this.query, 'path', os.homedir());
     let filter = getQueryParam(this.query, 'filter');
     let recursive = getQueryParam(this.query, 'recursive', false);
+    let depth = getQueryParam(this.query, 'depth', 1);
+    let items;
 
-    let items = yield readDir(basePath);
-    let files = yield items
-      .filter((filePath)=> {
-        if (process.platform === 'win32') {
-          // cannot actually determine if file is hidden in windows
-          return true;
-        }
-        return !(/^\./.test(filePath));
-      })
-      .map((filePath)=> {
-        let actualPath = path.join(basePath, filePath);
-        let stats = fileStat(actualPath);
-        return {
-          path: S(actualPath).replaceAll(path.sep, '/').s,
-          stat: stats
-        }
-      });
+    if (recursive) {
+      items = yield FSScanner.traverse(basePath, depth, filter)
+    } else {
+      items = yield FSScanner.ls(basePath, filter);
+    }
 
     this.status = 200;
     this.body = {
-      count: files.length,
+      count: items.length,
       dir  : S(basePath).replaceAll(path.sep, '/').s,
-      files: files
+      files: items
     };
   } catch (err) {
     console.error(err);
@@ -75,6 +61,10 @@ function *onOptions() {
         'recursive': {
           'description': 'Should listing be recursive',
           'default'    : false
+        },
+        'depth'    : {
+          'description': 'How deep recursion should go ?',
+          'default'    : 1
         }
       }
     }
