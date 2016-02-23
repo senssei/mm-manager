@@ -1,32 +1,53 @@
-<md-content layout="column"
-            layout-gt-lg="row"
+<md-content layout="row"
+            layout-gt-lg="column"
             layout-align="center center"
             layout-fill>
-    <mm-search-movie movies="vm.foundMovies"></mm-search-movie>
-    <md-list id="pick_from search" ng-show="vm.foundMovies.length && !vm.movieSelected">
-        <md-subheader class="md-no-sticky">
-            Pink one of {{vm.foundMovies.length}} records, or run search again
-        </md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="item in vm.foundMovies">
-            <img ng-src="{{item.poster}}" ng-if="item.poster" class="md-avatar" alt="{{item.title}}"/>
-            <div class="md-list-item-text" layout="column">
-                <h3>{{ item.title }}</h3>
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="movieSearchSideNav">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">Search for movie</h1>
+        </md-toolbar>
+        <md-content layout-padding>
+            <mm-search-movie movies="vm.foundMovies"></mm-search-movie>
+            <md-list id="pick_from search" ng-show="vm.foundMovies.length && !vm.movieSelected">
+                <md-subheader class="md-no-sticky">
+                    Pink one of {{vm.foundMovies.length}} records, or run search again
+                </md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="item in vm.foundMovies">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ item.title }}</h3>
+                    </div>
+                    <md-icon ng-click="vm.selectMovieFromSearch($event,item)"
+                             aria-label="Select {{item.title}} from search"
+                             class="md-primary md-hue-3">done
+                    </md-icon>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-sidenav>
+    <form name="movieForm" style="min-height: 350px;" novalidate>
+        <md-content layout-padding
+                    layout-margin
+                    layout-fill
+                    layout-align="center center"
+                    layout="row">
+            <div>
+                <md-input-container class="md-block">
+                    <img ng-src="{{vm.movie.poster}}"
+                         ng-if="vm.movie.poster"
+                         class="md-avatar"
+                         alt="{{item.title}}"/>
+                    <md-button ng-click="vm.selectPoster()"
+                               class="md-primary"
+                               ng-show="!vm.movie.poster">
+                        <md-icon>search</md-icon>
+                        <span class="hint">Select poster</span>
+                    </md-button>
+                </md-input-container>
             </div>
-            <md-icon ng-click="vm.selectMovieFromSearch($event,item)"
-                     aria-label="Select {{item.title}} from search"
-                     class="md-primary md-hue-3">done
-            </md-icon>
-        </md-list-item>
-    </md-list>
-    <md-content layout-padding
-                layout-margin
-                layout-fill
-                style="min-height: 224px;" layout="row">
-        <div id="new_movie_form">
-            <h4>Define new movie for database</h4>
-            <form name="movieForm" novalidate>
-                <!--TODO(feature) selecting poster-->
-                <div layout-align layout-gt-sm="row">
+            <div>
+                <h4>Define new movie for database</h4>
+                <div layout="column"
+                     layout-gt-sm="row">
                     <md-input-container class="md-block">
                         <label>Title</label>
                         <input md-maxlength="50" required name="title" ng-model="vm.movie.title">
@@ -35,30 +56,52 @@
                         <label>Subtitle</label>
                         <input md-maxlength="150" name="subtitle" ng-model="vm.movie.subtitle">
                     </md-input-container>
-                    <md-datepicker ng-model="vm.movie.releasedAt" md-placeholder="Released at"></md-datepicker>
+                    <md-input-container class="md-block">
+                        <label>Duration [m]</label>
+                        <input type="number"
+                               required
+                               name="duration"
+                               min="0"
+                               ng-model="vm.movie.duration">
+                    </md-input-container>
                 </div>
                 <div layout-align layout-gt-sm="row">
                     <md-input-container class="md-block">
-                        <label>Description</label>
-                        <textarea md-maxlength="500" name="description" ng-model="vm.movie.description"></textarea>
+                        <label>Director</label>
+                        <input ng-minlength="2"
+                               ng-maxlength="250"
+                               name="director"
+                               ng-model="vm.movie.director">
                     </md-input-container>
                 </div>
                 <div>
-                    <md-button ng-click="vm.submitForm($event, vm.movie)"
-                               ng-disabled="movieForm.$invalid">
-                        <md-icon>done</md-icon>
-                        <span class="hint">Submit {{ vm.movie.title }}</span>
+                    <md-button ng-click="vm.toggleSearchNav()" class="md-primary">
+                        <md-icon>search</md-icon>
+                        <span class="hint">Search</span>
                     </md-button>
-                    <md-button ng-click="vm.clearForm($event)">
+                    <md-button ng-click="vm.submitForm($event, vm.movie)"
+                               ng-disabled="movieForm.$invalid"
+                               class="md-primary">
+                        <md-icon>done</md-icon>
+                        <span class="hint">Submit</span>
+                    </md-button>
+                    <md-button ng-click="vm.clearForm($event)" class="md-primary md-warn">
                         <md-icon>cached</md-icon>
                         <span class="hint">Clear</span>
                     </md-button>
-                    <md-button ng-click="vm.cancelForm($event)">
+                    <md-button ng-click="vm.cancelForm($event)" class="md-primary md-warn">
                         <md-icon>exit_to_app</md-icon>
                         <span class="hint">Cancel</span>
                     </md-button>
                 </div>
-            </form>
-        </div>
-    </md-content>
+            </div>
+            <div layout="column">
+                <md-input-container class="md-block">
+                    <label>Description</label>
+                    <textarea md-maxlength="500" name="description" ng-model="vm.movie.description"></textarea>
+                </md-input-container>
+                <md-datepicker ng-model="vm.movie.releasedAt" md-placeholder="Released at"></md-datepicker>
+            </div>
+        </md-content>
+    </form>
 </md-content>

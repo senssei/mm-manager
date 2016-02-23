@@ -1,4 +1,4 @@
-import camelCase from 'lodash/string/camelCase';
+import lString from 'lodash/string';
 import moment from 'moment';
 
 const HTTP = new WeakMap();
@@ -19,10 +19,31 @@ class OMDBResultTransformer {
   transformPair(key, value) {
     const mapper = {
       'released': () => {
-        const releasedAt = moment(value, 'DD MMM YYYY');
+        let releasedAt;
+        if (!value) {
+          releasedAt = moment();
+        } else {
+          releasedAt = moment(value, 'DD MMM YYYY');
+        }
         return {
           key  : 'releasedAt',
           value: releasedAt.toDate()
+        }
+      },
+      'runtime' : () => {
+        if (!value) {
+          return 0;
+        }
+        let runtime = value.split(' ')[0];
+        return {
+          key  : 'duration',
+          value: parseInt(runtime)
+        };
+      },
+      'plot'    : () => {
+        return {
+          key  : 'description',
+          value: value
         }
       }
     };
@@ -39,7 +60,7 @@ class OMDBResultTransformer {
       if (shouldSkipValue()) {
         continue;
       }
-      pair = this.transformPair(camelCase(key), value);
+      pair = this.transformPair(lString.camelCase(key), value);
       newData[pair.key] = pair.value;
     }
 

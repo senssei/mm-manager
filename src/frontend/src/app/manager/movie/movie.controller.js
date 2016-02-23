@@ -7,6 +7,7 @@ const STATE = new WeakMap();
 const TOAST = new WeakMap();
 const MOVIES_REF = new WeakMap();
 const PRIV = new WeakMap();
+const SIDE_NAV = new WeakMap();
 
 /**
  * @class MovieController
@@ -17,12 +18,13 @@ const PRIV = new WeakMap();
 // TODO(doc) finish writing documentation
 export default class MovieController extends Controller {
   /*@ngInject*/
-  constructor($scope, $state, $mdToast, mmFire) {
+  constructor($scope, $state, $mdToast, $mdSidenav, mmFire) {
     super($scope);
     STATE.set(this, $state);
     TOAST.set(this, $mdToast);
     MOVIES_REF.set(this, mmFire.firebaseArray('/movies'));
     PRIV.set(this, {});
+    SIDE_NAV.set(this, $mdSidenav);
   }
 
   $setup() {
@@ -44,9 +46,14 @@ export default class MovieController extends Controller {
     TOAST.del(this);
     MOVIES_REF.del(this);
     PRIV.del(this);
+    SIDE_NAV.del(this);
 
     this.foundMovies = undefined;
     this.movie = undefined;
+  }
+
+  toggleSearchNav() {
+    SIDE_NAV.get(this)('movieSearchSideNav').toggle();
   }
 
   submitForm($event, movie) {
@@ -100,11 +107,16 @@ export default class MovieController extends Controller {
 
     // copy into form model
     this.movie = {
-      title      : movie.title,
-      subtitle   : movie.subtitle,
-      description: movie.description,
-      releasedAt : movie.releasedAt
-    }
+      title      : movie.title || null,
+      subtitle   : movie.subtitle || null,
+      description: movie.description || null,
+      releasedAt : movie.releasedAt || null,
+      poster     : movie.poster || null,
+      duration   : movie.duration || null,
+      director   : movie.director || null
+    };
+
+    this.toggleSearchNav();
   }
 }
 
