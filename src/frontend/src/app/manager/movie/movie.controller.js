@@ -63,6 +63,7 @@ export default class MovieController extends Controller {
     const toast_fail = getToast.bind(this)('submit_fail');
     const successCallback = ()=> {
       TOAST.get(this).show(toast_ok);
+      STATE.get(this).go(appState);
     };
     const errorCallback = ()=> {
       TOAST.get(this).show(toast_fail);

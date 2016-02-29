@@ -16,18 +16,8 @@
                 layout-align="center stretch"
                 class="mm-center mm-with-border"
                 flex>
-        <md-list ng-if="vm.movies.length > 0" ng-cloak>
-            <md-subheader class="md-no-sticky">
-                <div layout-align-md>
-                    <span ng-if="vm.movies.length">{{vm.movies.length}} record{{vm.movies.length > 1 ? 's': ''}}</span>
-                </div>
-            </md-subheader>
-            <md-list-item class="md-3-line" ng-repeat="rec in vm.movies"
-                          ng-if="vm.movies.length > 0">
-
-            </md-list-item>
-        </md-list>
-        <md-content flex layout-padding>
+        <mm-movie-cart ng-if="vm.movies.length" mm-movies="vm.movies" mm-display-as="table" ng-cloak></mm-movie-cart>
+        <md-content flex layout-padding ng-if="!vm.movies.length">
             <h2>
                 Currently there are no movies in your database, please use button below
                 to add something :)
