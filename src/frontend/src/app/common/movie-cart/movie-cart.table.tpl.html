@@ -3,7 +3,6 @@
            ng-model="vm.movies">
         <thead md-head>
         <tr md-row>
-            <th md-column><span>ID</span></th>
             <th md-column><span>Poster</span></th>
             <th md-column><span>Title</span></th>
             <th md-column><span>Subtitle</span></th>
@@ -17,9 +16,8 @@
             md-select-id="{{movie.$id}}"
             md-auto-select
             ng-repeat="movie in vm.movies">
-            <td md-cell>{{ movie.$index }}</td>
             <td md-cell>
-                <img ng-src="{{ movie.poster }}" class="md-avatar" alt="{{ movie.title }}" ng-if="movie.poster"/>
+                <mm-movie-poster alt="movie.title" poster="movie.poster"></mm-movie-poster>
             </td>
             <td md-cell>{{ movie.title }}</td>
             <td md-cell>{{ movie.subtitle }}</td>
