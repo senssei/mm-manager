@@ -1,4 +1,4 @@
 <span>
-    <img ng-src="{{ poster }}" alt="{{ alt }}" class="mm-movie-poster" aria-label="poster" ng-if="poster"/>
-    <md-icon ng-if="!poster" alt="Movie poster not located" aria-label="not_found">error</md-icon>
+    <img ng-src="{{ vm.poster }}" alt="{{ vm.alt }}" class="mm-movie-poster" aria-label="poster" ng-if="vm.poster"/>
+    <md-icon ng-if="!vm.poster" alt="Movie poster not located" aria-label="not_found">error</md-icon>
 </span>
