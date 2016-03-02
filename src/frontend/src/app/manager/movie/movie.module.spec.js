@@ -25,14 +25,14 @@ function testStateSetup() {
     };
   });
 
-  it('should set state name to \'mm.mgr.movie\'', (done) => {
+  it('should set state name to \'mm.movie\'', (done) => {
     let callArgs;
 
     movieModuleState(stateProvider);
 
     expect(stateProvider.state.calledOnce).to.equal(true);
     callArgs = stateProvider.state.getCall(0).args[0];
-    expect(callArgs.name).to.equal('mm.mgr.movie');
+    expect(callArgs.name).to.equal('mm.movie');
 
     done();
   });

@@ -11,13 +11,65 @@ moduleUnitTest(
   [
     'ui.router',
     'ngMaterial',
-    'mm-manager.manager'
+    'mm-manager.manager',
+    'mm-manager.fire',
+    'mm-manager.app.common'
   ],
   {
     name : 'state setup',
     logic: testStateSetup
+  },
+  {
+    name : 'theme setup',
+    logic: themeSetup
   }
 );
+
+function themeSetup() {
+  let mdThemingProvider = {};
+
+  before(()=> {
+    mdThemingProvider = {
+      definePalette : sinon.spy(),
+      theme         : sinon.stub().returnsThis(),
+      dark          : sinon.stub().returnsThis(),
+      primaryPalette: sinon.stub().returnsThis()
+    }
+  });
+
+  it('should create custom mmPalette', (done)=> {
+    const expectedExtendedPalette = 'blue';
+    const expectedExtendedDefinition = {
+      '500': '326de6'
+    };
+
+    let paletteDefinition = {a: 1};
+    let extendedPalette;
+    let extendedDefinition;
+
+    mdThemingProvider.extendPalette = sinon.stub().returns(paletteDefinition);
+
+    appThemeConfig(mdThemingProvider);
+    expect(mdThemingProvider.extendPalette.calledOnce).to.equal(true);
+
+    extendedPalette = mdThemingProvider.extendPalette.getCall(0).args[0];
+    extendedDefinition = mdThemingProvider.extendPalette.getCall(0).args[1];
+    expect(extendedPalette).to.equal(expectedExtendedPalette);
+    expect(extendedDefinition).to.deep.equal(expectedExtendedDefinition);
+
+    expect(mdThemingProvider.definePalette.calledOnce).to.equal(true);
+    expect(mdThemingProvider.definePalette.getCall(0).args[0]).to.equal('mmPalette');
+    expect(mdThemingProvider.definePalette.getCall(0).args[1]).to.deep.equal(paletteDefinition);
+
+    expect(mdThemingProvider.theme.calledOnce).to.equal(true);
+    expect(mdThemingProvider.theme.calledWith('default')).to.equal(true)
+
+    expect(mdThemingProvider.primaryPalette.calledOnce).to.equal(true);
+    expect(mdThemingProvider.primaryPalette.calledWith('mmPalette')).to.equal(true);
+
+    done();
+  })
+}
 
 function testStateSetup() {
   let stateProvider = {};
