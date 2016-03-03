@@ -42,11 +42,11 @@ export default class MovieController extends Controller {
   }
 
   $destroy() {
-    STATE.del(this);
-    TOAST.del(this);
-    MOVIES_REF.del(this);
-    PRIV.del(this);
-    SIDE_NAV.del(this);
+    STATE.delete(this);
+    TOAST.delete(this);
+    MOVIES_REF.delete(this);
+    PRIV.delete(this);
+    SIDE_NAV.delete(this);
 
     this.foundMovies = undefined;
     this.movie = undefined;
@@ -121,7 +121,7 @@ export default class MovieController extends Controller {
   }
 }
 
-function preCreateToast($mdToast) {
+export function preCreateToast($mdToast) {
   return {
     'clear'      : $mdToast
       .simple()
@@ -144,6 +144,6 @@ function preCreateToast($mdToast) {
   }
 }
 
-function getToast(key) {
+export function getToast(key) {
   return PRIV.get(this)['toast'][key];
 }

@@ -7,6 +7,8 @@ moduleUnitTest(
   'mm-manager.manager.movie',
   [
     'angularMoment',
+    'ui.router',
+    'ngMaterial',
     'mm-manager.fire',
     'mm-manager.manager.search.movie'
   ],

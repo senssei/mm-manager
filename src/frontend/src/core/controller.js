@@ -17,9 +17,6 @@ export default class Controller {
     this.$listen('$destroy', ()=> {
       let priv = PRIVATE.get(self);
 
-      console.log(`${self.constructor.name}
-                  destroys ${priv.listeners.length} listeners`);
-
       priv.listeners.forEach(listener => listener());
 
       // call ctrl method $destroy for user action cleaning up
@@ -30,11 +27,9 @@ export default class Controller {
     });
 
 
-    timer.setTimeout(()=> {
-      $scope.$apply(()=> {
-        self.$setup();
-      })
-    }, 50);
+    $scope.$apply(()=> {
+      self.$setup();
+    });
   }
 
   /**
