@@ -1,6 +1,6 @@
 import {DEBUG} from 'common/flags';
 
-export {appThemeConfig, templateConfig, httpConfig};
+export {appThemeConfig, templateConfig, httpConfig, urlRouterConfig};
 
 /**
  * @param $mdThemingProvider
@@ -35,4 +35,14 @@ httpConfig.$inject = ['$httpProvider'];
 export function httpConfig($httpProvider) {
   $httpProvider.useApplyAsync(true);
 }
+
+urlRouterConfig.$inject = ['$urlRouterProvider'];
+function urlRouterConfig($urlRouterProvider) {
+  // case insensitive urls
+  $urlRouterProvider.rule(($injector, $location) => {
+    let path = $location.path();
+    return path.toLowerCase();
+  });
+}
+
 

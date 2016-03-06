@@ -6,7 +6,8 @@ import stateConfig from './app.stateConfig';
 import {
   templateConfig,
   httpConfig,
-  appThemeConfig
+  appThemeConfig,
+  urlRouterConfig
 } from './app.config';
 import AppController from './app.controller';
 import AppControlsController from './app-controls.controller';
@@ -25,6 +26,7 @@ const module = angular.module('mm-manager.app', [
     commonAppModule
   ])
   .config(stateConfig)
+  .config(urlRouterConfig)
   .config(templateConfig)
   .config(httpConfig)
   .config(appThemeConfig)
