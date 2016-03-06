@@ -46,9 +46,7 @@ export function karmaConf() {
     },
     ngHtml2JsPreprocessor: {
       cacheIdFromPath: (filePath)=> {
-        const path = filePath.replace('src/frontend/src/', '');
-        console.log(`path is ${path}`);
-        return path;
+        return filePath.replace('src/frontend/src/', '');
       },
       moduleName     : 'ng'
     },

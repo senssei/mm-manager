@@ -35,7 +35,7 @@ export default class MovieController extends Controller {
     vm.movie = {}; // movie form
 
     this.$watch('vm.foundMovies', (newValue, oldValue)=> {
-      vm.movieSelected = !(newValue && newValue !== oldValue)
+      vm.movieSelected = !!(newValue && newValue !== oldValue)
     });
 
     PRIV.get(this).toast = preCreateToast(TOAST.get(this));
@@ -50,6 +50,7 @@ export default class MovieController extends Controller {
 
     this.foundMovies = undefined;
     this.movie = undefined;
+    this.movieSelected = undefined;
   }
 
   toggleSearchNav() {

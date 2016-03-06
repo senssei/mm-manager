@@ -26,8 +26,7 @@ export default class Controller {
       SCOPE.delete(self); // remove reference
     });
 
-
-    $scope.$apply(()=> {
+    $scope.$applyAsync(()=> {
       self.$setup();
     });
   }
