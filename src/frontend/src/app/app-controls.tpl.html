@@ -1,6 +1,24 @@
-<md-button aria-label="{{act.label}}"
-           title="{{act.label}}"
-           ng-click="act.action()"
-           class="md-icon-button" ng-repeat="act in vm.toolbar.actions">
-    <md-icon>{{act.icon}}</md-icon>
+<md-button aria-label="Add movie"
+           title="Add movie"
+           ng-click="vm.openNewMovie()"
+           class="md-icon-button">
+    <md-icon>note_add</md-icon>
 </md-button>
+<div class="lock-size" layout="row" layout-align="center center">
+    <md-fab-speed-dial md-direction="down"
+                       class="md-scale">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-info">
+                <md-icon>menu</md-icon>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+            <md-button aria-label="File system"
+                       class="md-fab md-raised md-mini"
+                       ng-click="vm.browseFS()">
+                <md-icon aria-label="File system">eject</md-icon>
+                <md-tooltip>Browse file system looking for movies</md-tooltip>
+            </md-button>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+</div>

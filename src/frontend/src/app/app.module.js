@@ -15,6 +15,7 @@ import AppControlsController from './app-controls.controller';
 import managerModule from './manager/manager.module';
 import mmFireModule from 'common/fire/fire.module'
 import commonAppModule from './common';
+import fsModule from './fs';
 
 import './app.less';
 
@@ -23,7 +24,8 @@ const module = angular.module('mm-manager.app', [
     ngMaterial,
     mmFireModule,
     managerModule,
-    commonAppModule
+      commonAppModule,
+      fsModule
   ])
   .config(stateConfig)
   .config(urlRouterConfig)

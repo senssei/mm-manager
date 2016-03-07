@@ -13,7 +13,8 @@ moduleUnitTest(
     'ngMaterial',
     'mm-manager.manager',
     'mm-manager.fire',
-    'mm-manager.app.common'
+    'mm-manager.app.common',
+    'mm-manager.app.fs'
   ],
   {
     name : 'state setup',

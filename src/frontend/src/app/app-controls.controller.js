@@ -1,6 +1,7 @@
 import Controller from '../core/controller';
 
 import {name as movieState} from './manager/movie/movie.state.js';
+import {name as fsState} from './fs/fs.state';
 
 const STATE = new WeakMap();
 
@@ -12,23 +13,12 @@ export default class AppControlsController extends Controller {
     STATE.set(this, $state);
   }
 
-  $setup() {
-    const vm = this;
+  openNewMovie() {
+    STATE.get(this).go(movieState);
+  }
 
-    // setup toolbar
-    vm.toolbar = {
-      isOpen   : false,
-      direction: 'right',
-      actions  : [
-        {
-          label : 'Add movie',
-          icon  : 'note_add',
-          action: () => {
-            STATE.get(this).go(movieState)
-          }
-        }
-      ]
-    }
+  browseFS() {
+    STATE.get(this).go(fsState);
   }
 
 }
