@@ -1,5 +1,3 @@
-import timer from 'timers';
-
 const PRIVATE = new WeakMap();
 const SCOPE = new WeakMap();
 
