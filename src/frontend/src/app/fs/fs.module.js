@@ -3,9 +3,16 @@ import ngMaterial from 'angular-material';
 import uiRouter from 'angular-ui-router';
 
 import fsStateConfig from './fs.stateConfig';
+import {name as FSControllerName, FSController} from './fs.controller';
 
-export default angular.module('mm-manager.app.fs', [
-    ngMaterial,
-    uiRouter
-  ])
-  .config(fsStateConfig);
+import fsDir from './dir';
+
+const required = [
+  ngMaterial,
+  uiRouter,
+  fsDir
+];
+export default angular
+  .module('mm-manager.app.fs', required)
+  .config(fsStateConfig)
+  .controller(FSControllerName, FSController)

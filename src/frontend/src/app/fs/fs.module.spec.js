@@ -8,7 +8,8 @@ moduleUnitTest(
   'mm-manager.app.fs',
   [
     'ui.router',
-    'ngMaterial'
+    'ngMaterial',
+    'mm-manager.app.fs.dir'
   ],
   {
     name : 'state setup',
@@ -44,6 +45,23 @@ moduleUnitTest(
 
         done();
       });
+
+      it('should define top level view', ()=> {
+        let callArgs;
+        let view;
+
+        stateConfig(stateProvider);
+
+        expect(stateProvider.state.calledOnce).to.equal(true);
+        callArgs = stateProvider.state.getCall(0).args[0];
+        expect(callArgs.views).to.have.key('@');
+
+        view = callArgs.views['@'];
+
+        expect(view.controller).to.equal('FSController');
+        expect(view.controllerAs).to.equal('vm');
+        expect(view.bindToController).to.equal(true);
+      })
     }
-  },
+  }
 );

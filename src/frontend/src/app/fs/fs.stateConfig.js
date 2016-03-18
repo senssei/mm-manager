@@ -1,4 +1,5 @@
 import {name, url} from './fs.state';
+import {name as controllerName} from './fs.controller';
 
 stateConfig.$inject = ['$stateProvider'];
 export default function stateConfig($stateProvider) {
@@ -7,7 +8,10 @@ export default function stateConfig($stateProvider) {
     url  : url,
     views: {
       '@': {
-        templateUrl: require('./fs.tpl.html')
+        controller      : controllerName,
+        controllerAs    : 'vm',
+        bindToController: true,
+        templateUrl     : require('./fs.tpl.html')
       }
     }
   };
