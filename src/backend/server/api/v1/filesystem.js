@@ -20,15 +20,16 @@ export default mount(
 function *onGet() {
   try {
     let basePath = getQueryParam(this.query, 'path', os.homedir());
-    let filter = getQueryParam(this.query, 'filter');
+    let filter = getQueryParam(this.query, 'filter', '');
     let recursive = getQueryParam(this.query, 'recursive', false);
     let depth = getQueryParam(this.query, 'depth', 1);
+    let onlyDirectory = getQueryParam(this.query, 'dir', true);
     let items;
 
     if (recursive) {
-      items = yield FSScanner.traverse(basePath, depth, filter)
+      items = yield FSScanner.traverse(basePath, depth, filter, onlyDirectory)
     } else {
-      items = yield FSScanner.ls(basePath, filter);
+      items = yield FSScanner.ls(basePath, filter, onlyDirectory);
     }
 
     this.status = 200;
@@ -56,7 +57,7 @@ function *onOptions() {
         },
         'filter'   : {
           'description': 'List of extensions to apply to list',
-          'default'    : undefined
+          'default'    : ''
         },
         'recursive': {
           'description': 'Should listing be recursive',
@@ -65,6 +66,10 @@ function *onOptions() {
         'depth'    : {
           'description': 'How deep recursion should go ?',
           'default'    : 1
+        },
+        'dir'      : {
+          'description': 'Should it list only the directories',
+          'default'    : true
         }
       }
     }
